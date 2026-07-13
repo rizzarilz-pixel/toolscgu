@@ -1,0 +1,2940 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CGU TOOLS</title>
+    <meta name="keywords" content="ConvertGamingUID | tools free fire, like, check banned, and more">
+    <meta name="description" content="Platform terpercaya tools Free Fire.">
+    <meta name="author" content="ConvertGamingUID">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="ConvertGamingUID | tools free fire, like, check banned, and more">
+    <meta property="og:description" content="ConvertGamingUID | tools free fire, like, check banned, and more">
+    <meta property="og:image" content="https://i.ibb.co.com/Xk200BC5/b0b0a65b-9c38-43e1-8a08-953817d89b1b.jpg">
+    <link rel="canonical" href="">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Bungee+Spice&family=Honk&family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    </script>
+    <style>
+        /* ----- RESET & BASE ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b0e14;
+            color: #f0f0f0;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ----- VIDEO LATAR BELAKANG ----- */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: brightness(0.45) saturate(0.9);
+        }
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(11, 14, 20, 0.35) 0%, rgba(11, 14, 20, 0.65) 100%);
+            z-index: -1;
+        }
+
+        /* ===== SPLASH / LOADING SCREEN ===== */
+        #splash {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(11, 14, 20, 0.92);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.7s ease, visibility 0.7s ease;
+        }
+        #splash.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #splash .loader-ring {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        #splash .loader-ring .ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-radius: 50%;
+            animation: spinRing 1.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+        #splash .loader-ring .ring:nth-child(1) {
+            border-top-color: #ff4fd8;
+            animation-delay: 0s;
+        }
+        #splash .loader-ring .ring:nth-child(2) {
+            border-right-color: #ff9ff0;
+            animation-delay: 0.4s;
+        }
+        #splash .loader-ring .ring:nth-child(3) {
+            border-bottom-color: #a78bfa;
+            animation-delay: 0.8s;
+        }
+        #splash .loader-ring .ring:nth-child(4) {
+            border-left-color: #7c3aed;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes spinRing {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #splash .loader-text {
+            font-family: 'Honk', system-ui;
+            font-size: 2rem;
+            margin-top: 30px;
+            color: #ff4fd8;
+            text-shadow: 0 0 40px rgba(255, 79, 216, 0.4);
+            letter-spacing: 2px;
+        }
+        #splash .loader-sub {
+            font-size: 0.85rem;
+            color: #b0b8c8;
+            margin-top: 8px;
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+        #splash .loader-dots {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        #splash .loader-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff4fd8;
+            animation: dotBounce 1.4s ease-in-out infinite both;
+        }
+        #splash .loader-dots span:nth-child(1) {
+            animation-delay: 0s;
+        }
+        #splash .loader-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        #splash .loader-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dotBounce {
+            0%,
+            80%,
+            100% {
+                transform: scale(0.4);
+                opacity: 0.3;
+            }
+            40% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* ----- HEADER ----- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 14px 28px;
+            background: rgba(11, 14, 20, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 79, 216, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 30;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+        header .brand {
+            font-family: 'Honk', system-ui;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+            color: #ff4fd8;
+            text-shadow: 0 0 20px rgba(255, 79, 216, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        header .brand i {
+            font-size: 1.3rem;
+            color: #ff9ff0;
+        }
+        .menu-icon {
+            font-size: 1.6rem;
+            color: #ff4fd8;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+            background: rgba(255, 79, 216, 0.12);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 79, 216, 0.2);
+        }
+        .menu-icon:hover {
+            transform: rotate(90deg);
+            color: #ff9ff0;
+            border-color: #ff9ff0;
+            background: rgba(255, 79, 216, 0.2);
+        }
+
+        /* ----- CONTAINER UTAMA ----- */
+        .container {
+            margin-top: 90px;
+            padding: 20px 20px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* ----- ANIMASI FADE ----- */
+        .fade {
+            opacity: 0;
+            transform: translateY(28px) scale(0.98);
+            transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .fade.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* ----- KAD / KOTAK HALAMAN ----- */
+        .page-box {
+            background: rgba(18, 22, 30, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px 28px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 79, 216, 0.15);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 79, 216, 0.06);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            transition: box-shadow 0.4s ease;
+        }
+        .page-box:hover {
+            box-shadow: 0 8px 50px rgba(0, 0, 0, 0.6), 0 0 45px rgba(255, 79, 216, 0.12);
+        }
+        .page-box-wide {
+            max-width: 580px;
+        }
+
+        /* ----- VIDEO SAMBUTAN ----- */
+        .welcome-video {
+            width: 100%;
+            max-width: 380px;
+            border-radius: 18px;
+            overflow: hidden;
+            margin: 0 auto 18px;
+            box-shadow: 0 4px 30px rgba(255, 79, 216, 0.15);
+            border: 1px solid rgba(255, 79, 216, 0.1);
+        }
+        .welcome-video video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 18px;
+        }
+
+        /* ----- TYPOGRAPHY ----- */
+        .honk {
+            font-family: 'Honk', system-ui;
+            font-weight: 400;
+            font-style: normal;
+            font-variation-settings: "MORF" 15, "SHLN" 50;
+            color: #ff4fd8;
+            text-shadow: 0 0 30px rgba(255, 79, 216, 0.3);
+        }
+        .bungee-spice {
+            font-family: 'Bungee Spice', sans-serif;
+            font-weight: 400;
+        }
+        .inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: #ff4fd8;
+            text-shadow: 0 0 30px rgba(255, 79, 216, 0.3);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        h2 {
+            font-size: 1.4rem;
+            color: #ff4fd8;
+            text-shadow: 0 0 25px rgba(255, 79, 216, 0.25);
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+        .sub {
+            color: #b0b8c8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        /* ----- PEMUTAR MUSIK ----- */
+        #music-player {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 16px 20px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 79, 216, 0.15);
+            box-shadow: 0 0 30px rgba(255, 79, 216, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            width: 100%;
+            max-width: 340px;
+            margin: 10px auto 0;
+            transition: box-shadow 0.3s ease;
+        }
+        #music-player:hover {
+            box-shadow: 0 0 45px rgba(255, 79, 216, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        #music-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+        #music-controls button {
+            background: none;
+            border: none;
+            color: #ff4fd8;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+            padding: 4px 6px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 79, 216, 0.05);
+        }
+        #music-controls button:hover {
+            transform: scale(1.15);
+            color: #ff9ff0;
+            background: rgba(255, 79, 216, 0.1);
+        }
+        #music-controls button:active {
+            transform: scale(0.92);
+        }
+
+        .equalizer {
+            display: flex;
+            gap: 4px;
+            align-items: flex-end;
+            height: 18px;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+        .equalizer .bar {
+            width: 4px;
+            background: linear-gradient(180deg, #ff4fd8, #ff9ff0);
+            border-radius: 2px;
+            animation: eqBounce 0.9s infinite alternate ease-in-out;
+        }
+        .equalizer .bar:nth-child(1) {
+            animation-delay: 0.0s;
+            height: 10px;
+        }
+        .equalizer .bar:nth-child(2) {
+            animation-delay: 0.15s;
+            height: 16px;
+        }
+        .equalizer .bar:nth-child(3) {
+            animation-delay: 0.30s;
+            height: 20px;
+        }
+        .equalizer .bar:nth-child(4) {
+            animation-delay: 0.45s;
+            height: 14px;
+        }
+        .equalizer .bar:nth-child(5) {
+            animation-delay: 0.60s;
+            height: 8px;
+        }
+        @keyframes eqBounce {
+            0% {
+                transform: scaleY(0.4);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+        .equalizer.paused .bar {
+            animation-play-state: paused;
+            opacity: 0.3;
+            transform: scaleY(0.3);
+        }
+
+        #progressContainer {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            margin: 4px 0 6px;
+        }
+        #progressBar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff4fd8, #ff9ff0);
+            border-radius: 4px;
+            transition: width 0.08s linear;
+            box-shadow: 0 0 12px rgba(255, 79, 216, 0.3);
+        }
+
+        #timeDisplay {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #c8b0d8;
+            letter-spacing: 0.5px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ----- JAM DIGITAL ----- */
+        #digitalClock {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            color: #ff4fd8;
+            text-shadow: 0 0 25px rgba(255, 79, 216, 0.25);
+            margin-top: 6px;
+            letter-spacing: 2px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(255, 79, 216, 0.06);
+        }
+
+        /* ----- SIDEBAR ----- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: rgba(11, 14, 20, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-left: 1px solid rgba(255, 79, 216, 0.12);
+            box-shadow: -8px 0 50px rgba(0, 0, 0, 0.6);
+            transition: right 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+            padding-top: 80px;
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .sidebar.active {
+            right: 0;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 24px;
+            color: #d0d8e8;
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background 0.25s ease, color 0.25s ease, padding-left 0.25s ease;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+        }
+        .sidebar a i {
+            width: 22px;
+            font-size: 1.1rem;
+            color: #ff4fd8;
+            transition: transform 0.3s ease;
+        }
+        .sidebar a:hover {
+            background: rgba(255, 79, 216, 0.08);
+            color: #fff;
+            padding-left: 34px;
+        }
+        .sidebar a:hover i {
+            transform: scale(1.2) rotate(-4deg);
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 22px;
+            font-size: 1.6rem;
+            color: #ff4fd8;
+            cursor: pointer;
+            background: rgba(255, 79, 216, 0.06);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 79, 216, 0.1);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .sidebar .close-btn:hover {
+            transform: rotate(90deg);
+            background: rgba(255, 79, 216, 0.15);
+        }
+        .sidebar .menu-label {
+            padding: 10px 24px 6px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 79, 216, 0.35);
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255, 79, 216, 0.05);
+        }
+
+        /* ----- FORM & INPUT ----- */
+        input,
+        textarea,
+        select {
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            padding: 12px 16px;
+            margin-top: 6px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(0, 0, 0, 0.35);
+            color: #f0f0f0;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            outline: none;
+        }
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #ff4fd8;
+            box-shadow: 0 0 0 3px rgba(255, 79, 216, 0.12);
+            background: rgba(0, 0, 0, 0.5);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ff4fd8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+        }
+        select option {
+            background: #1a1f2a;
+            color: #f0f0f0;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #b0b8c8;
+            margin-top: 14px;
+            letter-spacing: 0.3px;
+        }
+        label:first-of-type {
+            margin-top: 4px;
+        }
+        .label-icon {
+            margin-right: 6px;
+            color: #ff4fd8;
+        }
+
+        /* ----- BUTTON ----- */
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #ff4fd8, #e03ab8);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 25px rgba(255, 79, 216, 0.25);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 8px 40px rgba(255, 79, 216, 0.35);
+            background: linear-gradient(135deg, #ff66e0, #e84ac8);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            background: rgba(255, 79, 216, 0.08);
+            border: 1px solid rgba(255, 79, 216, 0.2);
+            border-radius: 14px;
+            color: #ff4fd8;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 79, 216, 0.15);
+            border-color: #ff4fd8;
+            transform: translateY(-1px);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ff4757, #c0392b);
+            box-shadow: 0 4px 25px rgba(255, 71, 87, 0.25);
+        }
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #ff6b7a, #e74c3c);
+            box-shadow: 0 8px 40px rgba(255, 71, 87, 0.35);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            box-shadow: 0 4px 25px rgba(46, 204, 113, 0.25);
+        }
+        .btn-success:hover {
+            background: linear-gradient(135deg, #55efc4, #2ecc71);
+            box-shadow: 0 8px 40px rgba(46, 204, 113, 0.35);
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            box-shadow: 0 4px 25px rgba(243, 156, 18, 0.25);
+        }
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            box-shadow: 0 8px 40px rgba(243, 156, 18, 0.35);
+        }
+        .btn-pink {
+            background: linear-gradient(135deg, #db2777, #9d174d);
+            box-shadow: 0 4px 25px rgba(219, 39, 119, 0.25);
+        }
+        .btn-pink:hover {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            box-shadow: 0 8px 40px rgba(236, 72, 153, 0.35);
+        }
+
+        /* ----- STATUS ----- */
+        .status {
+            margin-top: 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-height: 28px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* ----- LINK BUTTONS ----- */
+        .link-buttons {
+            margin-top: 18px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .link-buttons a {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 14px;
+            background: rgba(255, 79, 216, 0.06);
+            border: 1px solid rgba(255, 79, 216, 0.12);
+            border-radius: 40px;
+            color: #d0d8e8;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.25s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .link-buttons a:hover {
+            background: rgba(255, 79, 216, 0.14);
+            border-color: #ff4fd8;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .link-buttons a i {
+            color: #ff4fd8;
+            font-size: 1rem;
+        }
+
+        /* ----- OTP & GRID ----- */
+        .otp-target-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin-top: 6px;
+        }
+        .otp-target-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .otp-target-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+        .otp-target-list::-webkit-scrollbar-thumb {
+            background: #ff4fd8;
+            border-radius: 10px;
+        }
+        .otp-target-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 79, 216, 0.08);
+            border-radius: 8px;
+            padding: 8px 10px;
+            transition: border-color 0.3s ease, background 0.3s ease;
+            cursor: pointer;
+        }
+        .otp-target-item:hover {
+            border-color: rgba(255, 79, 216, 0.3);
+            background: rgba(255, 79, 216, 0.04);
+        }
+        .otp-target-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #ff4fd8;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin: 0;
+        }
+        .otp-target-item .target-name {
+            font-size: 0.78rem;
+            color: #e0e8f0;
+            font-weight: 500;
+        }
+        .otp-target-item .target-status {
+            margin-left: auto;
+            font-size: 0.7rem;
+            color: #b0b8c8;
+        }
+        .otp-target-item .target-status.success {
+            color: #2ecc71;
+        }
+        .otp-target-item .target-status.failed {
+            color: #ff4757;
+        }
+        .otp-target-item .target-status.pending {
+            color: #f39c12;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            padding: 8px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #b0b8c8;
+            cursor: pointer;
+            margin-top: 0;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #ff4fd8;
+            cursor: pointer;
+        }
+
+        .otp-progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+        .otp-progress-bar .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4fd8, #ff9ff0);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .otp-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.85rem;
+        }
+        .otp-result-item:last-child {
+            border-bottom: none;
+        }
+        .otp-result-item .result-name {
+            color: #b0b8c8;
+        }
+        .otp-result-item .result-status {
+            font-weight: 600;
+        }
+        .otp-result-item .result-status.success {
+            color: #2ecc71;
+        }
+        .otp-result-item .result-status.failed {
+            color: #ff4757;
+        }
+
+        .like-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .like-stat-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        .like-stat-item .stat-label {
+            font-size: 0.65rem;
+            color: #b0b8c8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .like-stat-item .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ff9ff0;
+            margin-top: 4px;
+        }
+        .like-stat-item .stat-value.success {
+            color: #2ecc71;
+        }
+        .like-stat-item .stat-value.danger {
+            color: #ff4757;
+        }
+        .like-stat-item .stat-value.warning {
+            color: #f39c12;
+        }
+
+        .result-box {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            padding: 14px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            min-height: 60px;
+            max-height: 180px;
+            overflow-y: auto;
+            color: #b0b8c8;
+            text-align: left;
+            margin-top: 12px;
+        }
+        .result-box.success {
+            border-color: #2ecc71;
+            color: #2ecc71;
+        }
+        .result-box.warning {
+            border-color: #f39c12;
+            color: #f39c12;
+        }
+        .result-box.error {
+            border-color: #ff4757;
+            color: #ff4757;
+        }
+        .result-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .result-box::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+        .result-box::-webkit-scrollbar-thumb {
+            background: #ff4fd8;
+            border-radius: 10px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .lobby-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .guest-accounts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .guest-accounts-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .guest-accounts-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+        .guest-accounts-list::-webkit-scrollbar-thumb {
+            background: #ff4fd8;
+            border-radius: 10px;
+        }
+        .guest-item {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 79, 216, 0.08);
+            border-radius: 8px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.3s ease;
+        }
+        .guest-item:hover {
+            border-color: rgba(255, 79, 216, 0.25);
+        }
+        .guest-item .guest-email {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #e0e8f0;
+        }
+        .guest-item .guest-password {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #ff9ff0;
+        }
+        .guest-item .guest-index {
+            font-size: 0.7rem;
+            color: #b0b8c8;
+            font-weight: 600;
+        }
+        .guest-item .copy-icon {
+            color: #b0b8c8;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .guest-item .copy-icon:hover {
+            color: #ff4fd8;
+        }
+
+        .bio-preview {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #ff4fd8;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            word-break: break-word;
+            margin-top: 6px;
+            text-align: left;
+        }
+        .jwt-token-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border-left: 3px solid #f39c12;
+            font-size: 0.7rem;
+            word-break: break-all;
+            max-height: 120px;
+            overflow-y: auto;
+            font-family: monospace;
+            color: #f39c12;
+            text-align: left;
+            margin-top: 6px;
+        }
+        .jwt-token-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .jwt-token-box::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+        .jwt-token-box::-webkit-scrollbar-thumb {
+            background: #ff4fd8;
+            border-radius: 10px;
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+        .color-picker-wrapper input[type="color"] {
+            width: 48px;
+            height: 48px;
+            border: 2px solid rgba(255, 79, 216, 0.2);
+            border-radius: 10px;
+            background: transparent;
+            cursor: pointer;
+            padding: 2px;
+            margin: 0;
+        }
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 6px;
+        }
+        .color-picker-wrapper .color-hex {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #b0b8c8;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .login-method-tabs {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+        .login-method-tabs .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255, 79, 216, 0.15);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #b0b8c8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        .login-method-tabs .tab-btn.active {
+            border-color: #ff4fd8;
+            background: rgba(255, 79, 216, 0.1);
+            color: #fff;
+        }
+        .login-method-tabs .tab-btn:hover {
+            border-color: rgba(255, 79, 216, 0.4);
+            color: #fff;
+        }
+        .method-content {
+            display: none;
+        }
+        .method-content.active {
+            display: block;
+        }
+
+        .oauth-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .oauth-grid .btn-oauth {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            color: #d0d8e8;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .oauth-grid .btn-oauth:hover {
+            background: rgba(255, 79, 216, 0.1);
+            border-color: #ff4fd8;
+            transform: translateY(-2px);
+        }
+        .oauth-grid .btn-oauth img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        .oauth-grid .btn-oauth .apple-icon {
+            filter: brightness(0) invert(1);
+        }
+
+        .ban-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .ban-status-badge.banned {
+            background: rgba(255, 71, 87, 0.12);
+            color: #ff6b7a;
+            border: 1px solid rgba(255, 71, 87, 0.15);
+        }
+        .ban-status-badge.banned::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ff4757;
+            border-radius: 50%;
+        }
+        .ban-status-badge.active {
+            background: rgba(46, 204, 113, 0.12);
+            color: #55efc4;
+            border: 1px solid rgba(46, 204, 113, 0.15);
+        }
+        .ban-status-badge.active::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #2ecc71;
+            border-radius: 50%;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #b0b8c8;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 79, 216, 0.1);
+            border-color: #ff4fd8;
+            color: #fff;
+        }
+
+        .region-sub-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 79, 216, 0.06);
+            border-radius: 8px;
+            padding: 10px 14px;
+            text-align: left;
+            margin-top: 6px;
+        }
+        .region-sub-card .tag-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.75rem;
+            color: #ff9ff0;
+            font-weight: bold;
+            margin-bottom: 4px;
+            display: inline-block;
+            background: rgba(255, 79, 216, 0.06);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .region-sub-card .info-label {
+            font-size: 0.6rem;
+            color: #b0b8c8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+        .region-sub-card .info-value {
+            font-size: 0.8rem;
+            color: #e0e8f0;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 480px) {
+            header {
+                padding: 10px 16px;
+            }
+            header .brand {
+                font-size: 1.2rem;
+            }
+            .page-box {
+                padding: 22px 16px;
+                border-radius: 20px;
+                max-width: 100%;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            .container {
+                padding: 16px 12px 30px;
+                margin-top: 80px;
+            }
+            #music-player {
+                padding: 14px 14px 16px;
+            }
+            .sidebar {
+                width: 280px;
+                right: -280px;
+            }
+            .sidebar a {
+                padding: 12px 18px;
+                font-size: 0.85rem;
+            }
+            .otp-target-list {
+                grid-template-columns: 1fr 1fr;
+            }
+            .like-stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .lobby-buttons {
+                grid-template-columns: 1fr;
+            }
+            .oauth-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .login-method-tabs {
+                flex-direction: column;
+            }
+            .checkbox-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+        @media (max-width: 380px) {
+            header .brand {
+                font-size: 1rem;
+            }
+            .menu-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 1.3rem;
+            }
+            .page-box {
+                padding: 18px 12px;
+            }
+            .otp-target-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== SPLASH / LOADING SCREEN ===== -->
+    <div id="splash">
+        <div class="loader-ring">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+        </div>
+        <div class="loader-text">CGU TOOLS</div>
+        <div class="loader-sub">loading ...</div>
+        <div class="loader-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- VIDEO LATAR BELAKANG -->
+    <video autoplay muted loop class="bg-video">
+        <source src="https://files.catbox.moe/8jx5bm.mp4" type="video/mp4" />
+    </video>
+    <div class="bg-overlay"></div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="brand">
+            <i class="fas fa-sun"></i>
+            CGU TOOLS
+        </div>
+        <div class="menu-icon" onclick="toggleSidebar()" aria-label="Buka menu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <!-- KANDUNGAN UTAMA -->
+    <div id="content" class="container fade"></div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="close-btn" onclick="toggleSidebar()" aria-label="Tutup menu">
+            <i class="fas fa-times"></i>
+        </div>
+
+        <div class="menu-label">📌 Utama</div>
+        <a href="#" onclick="loadPage('home')"><i class="fas fa-home"></i> Laman Utama</a>
+
+        <div class="menu-label">🔧 Tools</div>
+        <a href="#" onclick="loadPage('acc-info')"><i class="fas fa-user-gear"></i> Account Info</a>
+        <a href="#" onclick="loadPage('ban-check')"><i class="fas fa-user-slash"></i> Ban Check</a>
+        <a href="#" onclick="loadPage('update')"><i class="fas fa-server"></i> Server Update</a>
+        <a href="#" onclick="loadPage('like-ff')"><i class="fas fa-thumbs-up"></i> Like Free Fire</a>
+        <a href="#" onclick="loadPage('guest')"><i class="fas fa-user-plus"></i> Guest Generator</a>
+        <a href="#" onclick="loadPage('banned-ff')"><i class="fas fa-gavel"></i> Banned FF</a>
+        <a href="#" onclick="loadPage('jwt')"><i class="fas fa-key"></i> JWT Generator</a>
+        <a href="#" onclick="loadPage('bio')"><i class="fas fa-pen-fancy"></i> Long Bio</a>
+        <a href="#" onclick="loadPage('oauth')"><i class="fas fa-right-to-bracket"></i> OAuth Login</a>
+        <a href="#" onclick="loadPage('like-kios')"><i class="fas fa-arrow-right-to-bracket"></i> Like KiosGamer</a>
+        <a href="#" onclick="loadPage('lobby')"><i class="fas fa-users"></i> Lobby 5</a>
+        <a href="#" onclick="loadPage('spam-otp')"><i class="fas fa-message"></i> Spam OTP</a>
+    </div>
+
+    <!-- AUDIO (disembunyikan) -->
+    <audio id="bgMusic" autoplay loop></audio>
+
+    <script>
+        // ============================================================
+        //  SPLASH SCREEN
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('splash').classList.add('hidden');
+                // Setelah splash hilang, load home dan play musik
+                loadPage('home');
+                // Play musik setelah splash hilang
+                setTimeout(function() {
+                    const music = document.getElementById('bgMusic');
+                    if (music && music.paused) {
+                        music.play().catch(function(e) {
+                            console.log('Auto-play prevented, user must interact');
+                        });
+                    }
+                }, 400);
+            }, 1800);
+        });
+
+        // ============================================================
+        //  VARIABEL GLOBAL
+        // ============================================================
+        let botToken = "";
+        let musicInitialized = false;
+
+        // ============================================================
+        //  MUSIC PLAYER - GLOBAL STATE
+        // ============================================================
+        let music = document.getElementById('bgMusic');
+        let isPlaying = false;
+        let currentTrack = 0;
+        const playlist = [
+            "https://files.catbox.moe/3255eb.mp3",
+            "https://files.catbox.moe/smo6xi.mp3",
+            "https://files.catbox.moe/ahquo2.mp3"
+        ];
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60) || 0;
+            const s = Math.floor(sec % 60) || 0;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function loadTrack(index) {
+            music.src = playlist[index];
+            music.load();
+            music.play().catch(function(e) {
+                console.log('Auto-play prevented');
+            });
+        }
+
+        // --- INIT MUSIC SYSTEM (ONCE) ---
+        function initMusicSystem() {
+            if (musicInitialized) return;
+            musicInitialized = true;
+
+            // Load first track
+            loadTrack(0);
+
+            // --- LANGSUNG KE LAGU BERIKUTNYA SAAT SELESAI ---
+            music.addEventListener('ended', function() {
+                currentTrack = (currentTrack + 1) % playlist.length;
+                loadTrack(currentTrack);
+            });
+
+            // Update play/pause state
+            music.addEventListener('play', function() {
+                isPlaying = true;
+                updateMusicUI();
+            });
+
+            music.addEventListener('pause', function() {
+                isPlaying = false;
+                updateMusicUI();
+            });
+
+            // Update progress bar & time display (global event)
+            music.addEventListener('timeupdate', function() {
+                const progressBar = document.getElementById('progressBar');
+                const timeDisplay = document.getElementById('timeDisplay');
+                if (progressBar) {
+                    const p = (music.currentTime / music.duration) * 100 || 0;
+                    progressBar.style.width = p + '%';
+                }
+                if (timeDisplay) {
+                    timeDisplay.textContent = `${formatTime(music.currentTime)} / ${formatTime(music.duration)}`;
+                }
+            });
+
+            // Click handler untuk progress container (di-attach di setupMusicUI)
+        }
+
+        // --- UPDATE MUSIC UI (dipanggil setiap home di-render) ---
+        function updateMusicUI() {
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const equalizer = document.getElementById('equalizer');
+            const progressBar = document.getElementById('progressBar');
+            const timeDisplay = document.getElementById('timeDisplay');
+
+            if (playPauseBtn) {
+                playPauseBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+            }
+            if (equalizer) {
+                if (isPlaying) {
+                    equalizer.classList.remove('paused');
+                } else {
+                    equalizer.classList.add('paused');
+                }
+            }
+            if (progressBar) {
+                const p = (music.currentTime / music.duration) * 100 || 0;
+                progressBar.style.width = p + '%';
+            }
+            if (timeDisplay) {
+                timeDisplay.textContent = `${formatTime(music.currentTime)} / ${formatTime(music.duration)}`;
+            }
+        }
+
+        // --- SETUP MUSIC UI CONTROLS (dipanggil setiap home di-render) ---
+        function setupMusicUI() {
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const progressContainer = document.getElementById('progressContainer');
+
+            // Pastikan musik sudah di-init
+            if (!musicInitialized) {
+                initMusicSystem();
+            }
+
+            // Update UI state
+            updateMusicUI();
+
+            // Play/Pause
+            if (playPauseBtn) {
+                // Hapus listener lama dengan clone
+                const newBtn = playPauseBtn.cloneNode(true);
+                playPauseBtn.parentNode.replaceChild(newBtn, playPauseBtn);
+                newBtn.addEventListener('click', function() {
+                    if (isPlaying) {
+                        music.pause();
+                    } else {
+                        music.play().catch(function(e) {});
+                    }
+                });
+            }
+
+            // Next
+            if (nextBtn) {
+                const newNext = nextBtn.cloneNode(true);
+                nextBtn.parentNode.replaceChild(newNext, nextBtn);
+                newNext.addEventListener('click', function() {
+                    currentTrack = (currentTrack + 1) % playlist.length;
+                    loadTrack(currentTrack);
+                });
+            }
+
+            // Prev
+            if (prevBtn) {
+                const newPrev = prevBtn.cloneNode(true);
+                prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+                newPrev.addEventListener('click', function() {
+                    currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+                    loadTrack(currentTrack);
+                });
+            }
+
+            // Progress container click
+            if (progressContainer) {
+                const newProgress = progressContainer.cloneNode(true);
+                progressContainer.parentNode.replaceChild(newProgress, progressContainer);
+                newProgress.addEventListener('click', function(e) {
+                    const rect = newProgress.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const newTime = (clickX / rect.width) * music.duration;
+                    music.currentTime = newTime;
+                });
+            }
+
+            // Update progress bar periodically (fallback)
+            if (!music._uiInterval) {
+                music._uiInterval = setInterval(function() {
+                    const progressBar = document.getElementById('progressBar');
+                    const timeDisplay = document.getElementById('timeDisplay');
+                    if (progressBar && music.duration) {
+                        const p = (music.currentTime / music.duration) * 100 || 0;
+                        progressBar.style.width = p + '%';
+                    }
+                    if (timeDisplay && music.duration) {
+                        timeDisplay.textContent = `${formatTime(music.currentTime)} / ${formatTime(music.duration)}`;
+                    }
+                }, 500);
+            }
+        }
+
+        // ============================================================
+        //  TOGGLE SIDEBAR
+        // ============================================================
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // ============================================================
+        //  MUAT HALAMAN
+        // ============================================================
+        function loadPage(page) {
+            const content = document.getElementById("content");
+            content.classList.remove('active');
+
+            setTimeout(() => {
+                document.getElementById('sidebar').classList.remove('active');
+
+                switch (page) {
+                    case 'home':
+                        renderHome(content);
+                        break;
+                    case 'acc-info':
+                        renderAccInfo(content);
+                        break;
+                    case 'ban-check':
+                        renderBanCheck(content);
+                        break;
+                    case 'update':
+                        renderUpdate(content);
+                        break;
+                    case 'like-ff':
+                        renderLikeFF(content);
+                        break;
+                    case 'guest':
+                        renderGuest(content);
+                        break;
+                    case 'banned-ff':
+                        renderBannedFF(content);
+                        break;
+                    case 'jwt':
+                        renderJWT(content);
+                        break;
+                    case 'bio':
+                        renderBio(content);
+                        break;
+                    case 'oauth':
+                        renderOAuth(content);
+                        break;
+                    case 'like-kios':
+                        renderLikeKios(content);
+                        break;
+                    case 'lobby':
+                        renderLobby(content);
+                        break;
+                    case 'spam-otp':
+                        renderSpamOTP(content);
+                        break;
+                    default:
+                        renderHome(content);
+                }
+
+                setTimeout(() => content.classList.add('active'), 80);
+            }, 280);
+        }
+
+        // ============================================================
+        //  FUNGSI RENDER HALAMAN
+        // ============================================================
+
+        // --- HOME ---
+        function renderHome(content) {
+            content.innerHTML = `
+                <div class="page-box">
+                    <div class="welcome-video">
+                        <video autoplay muted loop>
+                            <source src="https://files.catbox.moe/i4bc6v.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <h1 class="honk">CGU TOOLS 🌞</h1>
+                    <p class="sub">Klik <i class="fas fa-bars" style="color:#ff4fd8;"></i> di kanan atas untuk membuka menu tools.</p>
+
+                    <div id="music-player">
+                        <div id="music-controls">
+                            <button id="prevBtn" aria-label="Lagu sebelumnya"><i class="fas fa-backward"></i></button>
+                            <button id="playPauseBtn" aria-label="Main / jeda"><i class="fas fa-play"></i></button>
+                            <button id="nextBtn" aria-label="Lagu seterusnya"><i class="fas fa-forward"></i></button>
+                        </div>
+                        <div class="equalizer" id="equalizer">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                        </div>
+                        <div id="progressContainer">
+                            <div id="progressBar" style="width:0%;"></div>
+                        </div>
+                        <div id="timeDisplay">00:00 / 00:00</div>
+                        <div id="digitalClock"></div>
+                    </div>
+                </div>
+            `;
+            // Setup musik UI (tidak reset track)
+            setupMusicUI();
+            startClock();
+        }
+
+        // --- ACCOUNT INFO ---
+        function renderAccInfo(content) {
+            content.innerHTML = `
+                <div class="page-box page-box-wide">
+                    <h2 class="honk"><i class="fas fa-user-gear"></i> Account Info</h2>
+                    <p class="sub">Lihat profil lengkap pemain Free Fire.</p>
+                    <label><i class="fas fa-globe label-icon"></i> Region</label>
+                    <select id="accRegion">
+                        <option value="id">Indonesia (ID)</option>
+                        <option value="br">Brazil (BR)</option>
+                        <option value="bd">Bangladesh (BD)</option>
+                        <option value="ind">India (IND)</option>
+                    </select>
+                    <label><i class="fas fa-id-card label-icon"></i> UID</label>
+                    <input type="text" id="accUid" placeholder="Masukkan UID Player..." />
+                    <button class="btn-primary" onclick="fetchAccInfo()"><i class="fas fa-search"></i> Cari Profil</button>
+                    <div class="status" id="accStatus"></div>
+                    <div id="accResult" style="display:none; margin-top:16px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:14px;">
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:0.85rem;">
+                                <div><span style="color:#b0b8c8;">UID:</span> <span id="accRuid" style="color:#ff9ff0;">-</span></div>
+                                <div><span style="color:#b0b8c8;">Nama:</span> <span id="accRname" style="color:#fff; font-weight:bold;">-</span></div>
+                                <div><span style="color:#b0b8c8;">Region:</span> <span id="accRregion">-</span></div>
+                                <div><span style="color:#b0b8c8;">Level:</span> <span id="accRlvl">-</span></div>
+                                <div><span style="color:#b0b8c8;">Liked:</span> <span id="accRliked" style="color:#ff6b8a;">-</span></div>
+                                <div><span style="color:#b0b8c8;">BR Rank:</span> <span id="accRbr">-</span></div>
+                                <div><span style="color:#b0b8c8;">CS Rank:</span> <span id="accRcs">-</span></div>
+                                <div><span style="color:#b0b8c8;">Version:</span> <span id="accRver">-</span></div>
+                            </div>
+                            <hr style="border-color:rgba(255,79,216,0.08); margin:10px 0;">
+                            <div style="font-size:0.85rem;">
+                                <div><span style="color:#b0b8c8;">Clan:</span> <span id="accRclan" style="color:#ff9ff0;">-</span></div>
+                                <div><span style="color:#b0b8c8;">Clan Level:</span> <span id="accRclanlvl">-</span></div>
+                                <div><span style="color:#b0b8c8;">Members:</span> <span id="accRclanmem">-</span></div>
+                                <div><span style="color:#b0b8c8;">Bio:</span> <span id="accRbio" style="font-style:italic; color:#e0e8f0;">-</span></div>
+                                <div><span style="color:#b0b8c8;">Credit Score:</span> <span id="accRcredit" style="color:#2ecc71; font-weight:bold;">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- BAN CHECK ---
+        function renderBanCheck(content) {
+            content.innerHTML = `
+                <div class="page-box">
+                    <h2 class="honk"><i class="fas fa-user-slash"></i> Ban Check</h2>
+                    <p class="sub">Periksa status banned UID Free Fire.</p>
+                    <label><i class="fas fa-id-card label-icon"></i> UID</label>
+                    <input type="text" id="banUid" placeholder="Masukkan UID..." />
+                    <button class="btn-primary" onclick="fetchBanCheck()"><i class="fas fa-search"></i> Periksa</button>
+                    <div class="status" id="banStatus"></div>
+                    <div id="banResult" style="display:none; margin-top:14px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:14px; font-size:0.9rem;">
+                            <div><span style="color:#b0b8c8;">UID:</span> <span id="banRuid" style="color:#ff9ff0;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Status:</span> <span id="banRstatus">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- SERVER UPDATE ---
+        function renderUpdate(content) {
+            content.innerHTML = `
+                <div class="page-box page-box-wide">
+                    <h2 class="honk"><i class="fas fa-server"></i> Server Update</h2>
+                    <p class="sub">Lihat informasi update terbaru dari server Garena.</p>
+                    <button class="btn-primary" onclick="fetchServerUpdate()"><i class="fas fa-sync"></i> Refresh</button>
+                    <div class="status" id="updateStatus"></div>
+                    <div id="updateResult" style="display:none; margin-top:14px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:14px; font-size:0.85rem;">
+                            <div><span style="color:#b0b8c8;">Status:</span> <span id="upRstatus" style="color:#2ecc71; font-weight:bold;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Credit:</span> <span id="upRcredit">-</span></div>
+                            <hr style="border-color:rgba(255,79,216,0.08); margin:8px 0;">
+                            <div><span style="color:#b0b8c8;">Remote Version:</span> <span id="upRver">-</span></div>
+                            <div><span style="color:#b0b8c8;">Server URL:</span> <span id="upRurl" style="font-size:0.7rem; word-break:break-all;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Latest Release:</span> <span id="upRrelease">-</span></div>
+                            <div><span style="color:#b0b8c8;">Play Store:</span> <span id="upRplay">-</span></div>
+                            <hr style="border-color:rgba(255,79,216,0.08); margin:8px 0;">
+                            <div><span style="color:#b0b8c8;">Next Update:</span> <span id="upRnext">-</span></div>
+                            <div><span style="color:#b0b8c8;">Countdown:</span> <span id="upRcount" style="color:#ff9ff0;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Patch Evolution:</span> <span id="upRevo">-</span></div>
+                            <hr style="border-color:rgba(255,79,216,0.08); margin:8px 0;">
+                            <div style="color:#b0b8c8; font-size:0.75rem;">Region URLs:</div>
+                            <div id="upRregions" style="margin-top:6px;"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- LIKE FREE FIRE ---
+        function renderLikeFF(content) {
+            content.innerHTML = `
+                <div class="page-box">
+                    <h2 class="honk"><i class="fas fa-thumbs-up"></i> Like Free Fire</h2>
+                    <p class="sub">Kirim like ke UID target (ID & BD).</p>
+                    <label><i class="fas fa-globe label-icon"></i> Region</label>
+                    <select id="likeRegion">
+                        <option value="id">Indonesia (ID)</option>
+                        <option value="bd">Bangladesh (BD)</option>
+                    </select>
+                    <label><i class="fas fa-id-card label-icon"></i> UID Target</label>
+                    <input type="text" id="likeUid" placeholder="Masukkan UID..." />
+                    <button class="btn-primary" onclick="fetchLikeFF()"><i class="fas fa-paper-plane"></i> Kirim Like</button>
+                    <div class="status" id="likeStatus"></div>
+                    <div id="likeResult" style="display:none; margin-top:14px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:14px; font-size:0.85rem;">
+                            <div><span style="color:#b0b8c8;">Nama:</span> <span id="likeRname" style="color:#ff9ff0; font-weight:bold;">-</span></div>
+                            <div><span style="color:#b0b8c8;">UID:</span> <span id="likeRuid">-</span></div>
+                            <div><span style="color:#b0b8c8;">Region:</span> <span id="likeRregion">-</span></div>
+                            <div><span style="color:#b0b8c8;">Likes Given:</span> <span id="likeRgiven" style="color:#ff9ff0; font-weight:bold;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Before:</span> <span id="likeRbefore">-</span></div>
+                            <div><span style="color:#b0b8c8;">After:</span> <span id="likeRafter" style="color:#2ecc71; font-weight:bold;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Credit:</span> <span id="likeRcredit">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- GUEST GENERATOR ---
+        function renderGuest(content) {
+            content.innerHTML = `
+                <div class="page-box page-box-wide">
+                    <h2 class="honk"><i class="fas fa-user-plus"></i> Guest Generator</h2>
+                    <p class="sub">Generate akun guest Free Fire semua region.</p>
+                    <label><i class="fas fa-globe label-icon"></i> Region</label>
+                    <select id="guestRegion">
+                        <option value="ME">Middle East (ME)</option>
+                        <option value="IND">India (IND)</option>
+                        <option value="ID">Indonesia (ID)</option>
+                        <option value="VN">Vietnam (VN)</option>
+                        <option value="TH">Thailand (TH)</option>
+                        <option value="BD">Bangladesh (BD)</option>
+                        <option value="PK">Pakistan (PK)</option>
+                        <option value="TW">Taiwan (TW)</option>
+                        <option value="EU">Europe (EU)</option>
+                        <option value="RU">Russia (RU)</option>
+                        <option value="NA">North America (NA)</option>
+                        <option value="SAC">South America Central (SAC)</option>
+                        <option value="BR">Brazil (BR)</option>
+                        <option value="CIS">CIS (CIS)</option>
+                    </select>
+                    <label><i class="fas fa-tag label-icon"></i> Nama</label>
+                    <input type="text" id="guestName" value="void" placeholder="Nama..." />
+                    <label><i class="fas fa-hashtag label-icon"></i> Jumlah (max 50)</label>
+                    <input type="number" id="guestCount" value="5" min="1" max="50" />
+                    <label><i class="fas fa-key label-icon"></i> Prefix Password</label>
+                    <input type="text" id="guestPrefix" value="free" placeholder="Prefix..." />
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="guestGhost" checked /> Ghost Mode</label>
+                        <label><input type="checkbox" id="guestDetect" checked /> Detect Rare</label>
+                    </div>
+                    <button class="btn-primary" onclick="fetchGuestGenerator()"><i class="fas fa-wand-magic-sparkles"></i> Generate</button>
+                    <div class="status" id="guestStatus"></div>
+                    <div id="guestResult" style="display:none; margin-top:14px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:14px;">
+                            <div style="color:#b0b8c8; font-size:0.8rem; margin-bottom:8px;">Akun:</div>
+                            <div id="guestList" class="guest-accounts-list"></div>
+                            <hr style="border-color:rgba(255,79,216,0.08); margin:8px 0;">
+                            <div style="font-size:0.85rem; display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px;">
+                                <div><span style="color:#b0b8c8;">Total:</span> <span id="guestRtotal" style="color:#ff9ff0;">0</span></div>
+                                <div><span style="color:#b0b8c8;">Region:</span> <span id="guestRregion">-</span></div>
+                                <div><span style="color:#b0b8c8;">Status:</span> <span id="guestRstatus" style="color:#2ecc71;">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- BANNED FF ---
+        function renderBannedFF(content) {
+            content.innerHTML = `
+                <div class="page-box">
+                    <h2 class="honk"><i class="fas fa-gavel"></i> Banned FF</h2>
+                    <p class="sub">Ban akun Free Fire menggunakan UID & password.</p>
+                    <label><i class="fas fa-id-card label-icon"></i> UID Target</label>
+                    <input type="text" id="banFFUid" placeholder="Masukkan UID..." />
+                    <label><i class="fas fa-key label-icon"></i> Password</label>
+                    <input type="password" id="banFFPass" placeholder="Masukkan password..." />
+                    <button class="btn-primary btn-danger" onclick="fetchBannedFF()"><i class="fas fa-triangle-exclamation"></i> BAN AKUN</button>
+                    <div class="status" id="banFFStatus"></div>
+                    <div id="banFFResult" style="display:none; margin-top:14px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:14px; font-size:0.85rem;">
+                            <div><span style="color:#b0b8c8;">UID:</span> <span id="banFFRuid" style="color:#ff9ff0;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Nama:</span> <span id="banFFRname" style="color:#fff; font-weight:bold;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Region:</span> <span id="banFFRregion">-</span></div>
+                            <div><span style="color:#b0b8c8;">Platform:</span> <span id="banFFRplatform">-</span></div>
+                            <div><span style="color:#b0b8c8;">Status Ban:</span> <span id="banFFRstatus">-</span></div>
+                            <div><span style="color:#b0b8c8;">Chat Server:</span> <span id="banFFRchat">-</span></div>
+                            <div><span style="color:#b0b8c8;">Online Server:</span> <span id="banFFRonline">-</span></div>
+                            <div><span style="color:#b0b8c8;">Message:</span> <span id="banFFRmsg" style="font-style:italic; color:#b0b8c8;">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- JWT GENERATOR ---
+        function renderJWT(content) {
+            content.innerHTML = `
+                <div class="page-box">
+                    <h2 class="honk"><i class="fas fa-key"></i> JWT Generator</h2>
+                    <p class="sub">Generate JWT token untuk login Free Fire.</p>
+                    <label><i class="fas fa-id-card label-icon"></i> UID</label>
+                    <input type="text" id="jwtUid" placeholder="Masukkan UID..." />
+                    <label><i class="fas fa-key label-icon"></i> Password</label>
+                    <input type="password" id="jwtPass" placeholder="Masukkan password..." />
+                    <button class="btn-primary btn-warning" onclick="fetchJWTGenerator()"><i class="fas fa-key"></i> Generate</button>
+                    <div class="status" id="jwtStatus"></div>
+                    <div id="jwtResult" style="display:none; margin-top:14px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:14px;">
+                            <div><span style="color:#b0b8c8;">UID:</span> <span id="jwtRuid" style="color:#ff9ff0;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Token:</span></div>
+                            <div id="jwtRtoken" class="jwt-token-box">-</div>
+                            <button class="copy-btn" onclick="copyJWT()"><i class="fas fa-copy"></i> Salin Token</button>
+                            <hr style="border-color:rgba(255,79,216,0.08); margin:8px 0;">
+                            <div><span style="color:#b0b8c8;">Status:</span> <span id="jwtRstatus" style="color:#2ecc71;">-</span></div>
+                            <div><span style="color:#b0b8c8;">Message:</span> <span id="jwtRmsg" style="font-style:italic; color:#b0b8c8;">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- LONG BIO ---
+        function renderBio(content) {
+            content.innerHTML = `
+                <div class="page-box page-box-wide">
+                    <h2 class="honk"><i class="fas fa-pen-fancy"></i> Long Bio</h2>
+                    <p class="sub">Update bio dengan warna custom #HEX.</p>
+                    <label><i class="fas fa-pencil label-icon"></i> Bio Text (max 300)</label>
+                    <textarea id="bioText" rows="3" placeholder="Masukkan teks bio..." maxlength="300"></textarea>
+                    <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#b0b8c8; margin-top:4px;">
+                        <span>Maksimal 300 karakter</span>
+                        <span id="bioCharCount">0/300</span>
+                    </div>
+                    <label><i class="fas fa-palette label-icon"></i> Warna (HEX)</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="bioColor" value="#7c3aed" />
+                        <span class="color-hex" id="bioColorHex">#7c3aed</span>
+                    </div>
+                    <div class="login-method-tabs">
+                        <button class="tab-btn active" onclick="switchBioMethod('jwt')" id="bioTabJwt"><i class="fas fa-key"></i> JWT</button>
+                        <button class="tab-btn" onclick="switchBioMethod('uid')" id="bioTabUid"><i class="fas fa-user"></i> UID+Pass</button>
+                    </div>
+                    <div id="bioMethodJwt" class="method-content active">
+                        <label><i class="fas fa-key label-icon"></i> JWT Token</label>
+                        <input type="text" id="bioJwt" placeholder="Masukkan JWT token..." />
+                    </div>
+                    <div id="bioMethodUid" class="method-content">
+                        <label><i class="fas fa-id-card label-icon"></i> UID</label>
+                        <input type="text" id="bioUid" placeholder="Masukkan UID..." />
+                        <label><i class="fas fa-key label-icon"></i> Password</label>
+                        <input type="password" id="bioPass" placeholder="Masukkan password..." />
+                    </div>
+                    <button class="btn-primary btn-pink" onclick="fetchUpdateBio()"><i class="fas fa-pen-to-square"></i> Update Bio</button>
+                    <div class="status" id="bioStatus"></div>
+                    <div id="bioResult" style="display:none; margin-top:14px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:14px;">
+                            <div><span style="color:#b0b8c8;">Preview:</span></div>
+                            <div id="bioPreview" class="bio-preview">-</div>
+                            <hr style="border-color:rgba(255,79,216,0.08); margin:8px 0;">
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.85rem;">
+                                <div><span style="color:#b0b8c8;">Status:</span> <span id="bioRstatus" style="color:#2ecc71;">-</span></div>
+                                <div><span style="color:#b0b8c8;">Method:</span> <span id="bioRmethod" style="color:#b0b8c8;">-</span></div>
+                                <div><span style="color:#b0b8c8;">UID:</span> <span id="bioRuid" style="color:#ff9ff0;">-</span></div>
+                                <div><span style="color:#b0b8c8;">Nama:</span> <span id="bioRname" style="color:#fff; font-weight:bold;">-</span></div>
+                                <div><span style="color:#b0b8c8;">Region:</span> <span id="bioRregion">-</span></div>
+                                <div><span style="color:#b0b8c8;">Open ID:</span> <span id="bioRopenid">-</span></div>
+                            </div>
+                            <div style="margin-top:6px;"><span style="color:#b0b8c8;">Generated JWT:</span></div>
+                            <div id="bioRgenjwt" class="jwt-token-box">-</div>
+                            <div style="margin-top:6px;"><span style="color:#b0b8c8;">Message:</span> <span id="bioRmsg" style="font-style:italic; color:#b0b8c8;">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // Bio char counter
+            const bioText = document.getElementById('bioText');
+            const bioCharCount = document.getElementById('bioCharCount');
+            if (bioText) {
+                bioText.addEventListener('input', function() {
+                    bioCharCount.textContent = this.value.length + '/300';
+                });
+            }
+            // Color picker
+            const bioColor = document.getElementById('bioColor');
+            const bioColorHex = document.getElementById('bioColorHex');
+            if (bioColor) {
+                bioColor.addEventListener('input', function() {
+                    bioColorHex.textContent = this.value.toUpperCase();
+                });
+            }
+        }
+
+        // --- OAUTH LOGIN ---
+        function renderOAuth(content) {
+            content.innerHTML = `
+                <div class="page-box">
+                    <h2 class="honk"><i class="fas fa-right-to-bracket"></i> OAuth Login</h2>
+                    <p class="sub">Login via Google, Facebook, Apple, X, VK.</p>
+                    <div class="oauth-grid">
+                        <button class="btn-oauth" onclick="openOAuth('Google','https://auth.garena.com/universal/oauth?all_platforms=1&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https%3A%2F%2Fapi.ff.garena.co.id%2Fauth%2Fauth%2Fcallback_n%3Fsite%3Dhttps%3A%2F%2Fapi-ticket.ff.gameid.garena.co.id%2Foauth%2Fcallback_redirect%2F&platform=8')">
+                            <img src="https://raw.githubusercontent.com/KillerSharmaBot/Eat-Token/refs/heads/main/image/Google.png" alt="Google" style="width:24px;height:24px;border-radius:50%;" /> Google
+                        </button>
+                        <button class="btn-oauth" onclick="openOAuth('Facebook','https://auth.garena.com/universal/oauth?all_platforms=1&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https%3A%2F%2Fapi.ff.garena.co.id%2Fauth%2Fauth%2Fcallback_n%3Fsite%3Dhttps%3A%2F%2Fapi-ticket.ff.gameid.garena.co.id%2Foauth%2Fcallback_redirect%2F&platform=3')">
+                            <img src="https://raw.githubusercontent.com/KillerSharmaBot/Eat-Token/refs/heads/main/image/Facebook.png" alt="Facebook" style="width:24px;height:24px;border-radius:50%;" /> Facebook
+                        </button>
+                        <button class="btn-oauth" onclick="openOAuth('Apple','https://auth.garena.com/universal/oauth?platform=10&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https://api.ff.garena.co.id/auth/auth/callback_n?site=https://api-ticket.ff.gameid.garena.co.id/oauth/callback_redirect/')">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" style="width:24px;height:24px;filter:brightness(0) invert(1);" /> Apple
+                        </button>
+                        <button class="btn-oauth" onclick="openOAuth('X','https://auth.garena.com/universal/oauth?platform=11&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https://api.ff.garena.co.id/auth/auth/callback_n?site=https://api-ticket.ff.gameid.garena.co.id/oauth/callback_redirect/')">
+                            <img src="https://raw.githubusercontent.com/KillerSharmaBot/Eat-Token/refs/heads/main/image/X.png" alt="X" style="width:24px;height:24px;border-radius:50%;" /> X
+                        </button>
+                        <button class="btn-oauth" onclick="openOAuth('VK','https://auth.garena.com/universal/oauth?platform=5&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https://api.ff.garena.co.id/auth/auth/callback_n?site=https://api-ticket.ff.gameid.garena.co.id/oauth/callback_redirect/')">
+                            <img src="https://raw.githubusercontent.com/KillerSharmaBot/Eat-Token/refs/heads/main/image/VK.png" alt="VK" style="width:24px;height:24px;border-radius:50%;" /> VK
+                        </button>
+                    </div>
+                    <div class="status" id="oauthStatus" style="margin-top:14px;"></div>
+                </div>
+            `;
+        }
+
+        // --- LIKE KIOSGAMER ---
+        function renderLikeKios(content) {
+            content.innerHTML = `
+                <div class="page-box page-box-wide">
+                    <h2 class="honk"><i class="fas fa-arrow-right-to-bracket"></i> Like KiosGamer</h2>
+                    <p class="sub">Kirim like via URL KiosGamer.</p>
+                    <label><i class="fas fa-link label-icon"></i> URL KiosGamer</label>
+                    <input type="text" id="kiosUrl" placeholder="https://ticket.kiosgamer.co.id/?eat=xxxxx" />
+                    <button class="btn-primary btn-success" onclick="handleSendLike()"><i class="fas fa-rocket"></i> Kirim Like</button>
+                    <div class="result-box" id="kiosResult" style="margin-top:12px;">⏳ Masukkan URL KiosGamer</div>
+                    <div id="kiosStats" style="display:none; margin-top:12px;">
+                        <div class="like-stats-grid">
+                            <div class="like-stat-item"><div class="stat-label">👤 Nickname</div><div class="stat-value" id="kiosNick" style="color:#ff9ff0; font-size:0.9rem;">-</div></div>
+                            <div class="like-stat-item"><div class="stat-label">🆔 UID</div><div class="stat-value" id="kiosUid" style="font-size:0.9rem;">-</div></div>
+                            <div class="like-stat-item"><div class="stat-label">❤️ Given</div><div class="stat-value success" id="kiosGiven">0</div></div>
+                            <div class="like-stat-item"><div class="stat-label">📈 Success</div><div class="stat-value success" id="kiosSuccess">0</div></div>
+                            <div class="like-stat-item"><div class="stat-label">📈 Before</div><div class="stat-value" id="kiosBefore">0</div></div>
+                            <div class="like-stat-item"><div class="stat-label">📉 After</div><div class="stat-value warning" id="kiosAfter">0</div></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- LOBBY 5 ---
+        function renderLobby(content) {
+            content.innerHTML = `
+                <div class="page-box">
+                    <h2 class="honk"><i class="fas fa-users"></i> Lobby 5</h2>
+                    <p class="sub">Kirim request lobby ID & SG.</p>
+                    <label><i class="fas fa-link label-icon"></i> URL KiosGamer</label>
+                    <input type="text" id="lobbyKiosUrl" placeholder="https://ticket.kiosgamer.co.id/?eat=xxxxx" />
+                    <div class="lobby-buttons">
+                        <button class="btn-primary btn-warning" onclick="handleLobbyID()"><i class="fas fa-id-card"></i> Lobby ID</button>
+                        <button class="btn-primary btn-pink" onclick="handleLobbySG()"><i class="fas fa-server"></i> Lobby SG</button>
+                    </div>
+                    <div class="result-box" id="lobbyResult" style="margin-top:12px;">⏳ Pilih tombol Lobby ID atau Lobby SG</div>
+                </div>
+            `;
+        }
+
+        // --- SPAM OTP ---
+        function renderSpamOTP(content) {
+            content.innerHTML = `
+                <div class="page-box page-box-wide">
+                    <h2 class="honk"><i class="fas fa-message"></i> Spam OTP</h2>
+                    <p class="sub">Spam OTP ke nomor target via berbagai layanan.</p>
+                    <label><i class="fas fa-phone label-icon"></i> Nomor Target</label>
+                    <input type="text" id="otpPhone" placeholder="Contoh: 08123456789 atau 628123456789" />
+                    <label><i class="fas fa-list label-icon"></i> Pilih Layanan</label>
+                    <div class="otp-target-list" id="otpTargetList"></div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="otpSelectAll" checked onchange="toggleAllOTPTargets()" /> Pilih Semua</label>
+                        <label><input type="checkbox" id="otpParallel" checked /> Mode Paralel</label>
+                    </div>
+                    <button class="btn-primary btn-danger" onclick="startOTPSpam()"><i class="fas fa-bomb"></i> SPAM OTP</button>
+                    <div class="otp-progress-bar"><div class="progress-fill" id="otpProgress"></div></div>
+                    <div class="status" id="otpStatus"></div>
+                    <div id="otpResultContainer" style="display:none; margin-top:14px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:14px;">
+                            <div style="color:#b0b8c8; font-size:0.8rem; margin-bottom:6px;">Hasil:</div>
+                            <div id="otpResultList"></div>
+                            <hr style="border-color:rgba(255,79,216,0.08); margin:8px 0;">
+                            <div class="like-stats-grid">
+                                <div class="like-stat-item"><div class="stat-label">Total</div><div class="stat-value" id="otpTotal">0</div></div>
+                                <div class="like-stat-item"><div class="stat-label">Berhasil</div><div class="stat-value success" id="otpSuccess">0</div></div>
+                                <div class="like-stat-item"><div class="stat-label">Gagal</div><div class="stat-value danger" id="otpFailed">0</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            initOTPTargets();
+        }
+
+        // ============================================================
+        //  JAM DIGITAL
+        // ============================================================
+        function startClock() {
+            const clock = document.getElementById('digitalClock');
+            if (!clock) return;
+
+            function updateClock() {
+                const now = new Date();
+                const h = String(now.getHours()).padStart(2, '0');
+                const m = String(now.getMinutes()).padStart(2, '0');
+                const s = String(now.getSeconds()).padStart(2, '0');
+                clock.textContent = `${h}:${m}:${s}`;
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        // ============================================================
+        //  BIO METHOD SWITCH
+        // ============================================================
+        let currentBioMethod = 'jwt';
+
+        function switchBioMethod(method) {
+            currentBioMethod = method;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.method-content').forEach(el => el.classList.remove('active'));
+
+            if (method === 'jwt') {
+                document.getElementById('bioTabJwt').classList.add('active');
+                document.getElementById('bioMethodJwt').classList.add('active');
+            } else {
+                document.getElementById('bioTabUid').classList.add('active');
+                document.getElementById('bioMethodUid').classList.add('active');
+            }
+        }
+
+        // ============================================================
+        //  OTP SERVICES
+        // ============================================================
+        const OTP_SERVICES = [
+            { id: 'erafone', name: 'Erafone', format: '08' },
+            { id: 'planetban', name: 'Planetban', format: '08' },
+            { id: 'tuneup', name: 'Tuneup', format: '08' },
+            { id: 'hashmicro', name: 'HashMicro', format: '08' },
+            { id: 'klook', name: 'Klook', format: '62' },
+            { id: 'internetrakyat', name: 'Internet Rakyat', format: '08' },
+            { id: 'auto2000', name: 'Auto2000', format: '08' },
+            { id: 'astra_daihatsu', name: 'Astra Daihatsu', format: '62' },
+            { id: 'royal_canin', name: 'Royal Canin', format: '62' },
+            { id: 'watsons', name: 'Watsons', format: '08' },
+            { id: 'belirumah', name: 'BeliRumah', format: '62' },
+            { id: 'fastwork', name: 'Fastwork', format: '08' },
+            { id: 'beautyhaul', name: 'Beautyhaul', format: '08' },
+            { id: 'hainaya', name: 'Hainaya', format: '62' },
+            { id: 'minumyukkaka', name: 'Minum Yuk Kaka', format: '08' },
+            { id: 'sidemang', name: 'Sidemang', format: '08' },
+            { id: 'lapormasbup', name: 'Lapor Mas Bup', format: '08' },
+            { id: 'ptsp_kemenag', name: 'PTSP Kemenag', format: '08' },
+            { id: 'tokopedia', name: 'Tokopedia', format: '62' },
+            { id: 'pinhome', name: 'Pinhome', format: '62' },
+            { id: 'duniagames', name: 'Dunia Games', format: '08' },
+            { id: 'acc', name: 'ACC', format: '62' },
+            { id: 'absenku', name: 'Absenku', format: '08' },
+            { id: 'saturdays', name: 'Saturdays', format: '62' },
+            { id: 'maulagi', name: 'Maulagi', format: '08' },
+        ];
+
+        let otpSelectedTargets = new Set();
+        let isOTPRunning = false;
+
+        function initOTPTargets() {
+            const container = document.getElementById('otpTargetList');
+            if (!container) return;
+            container.innerHTML = '';
+            OTP_SERVICES.forEach(service => {
+                const item = document.createElement('div');
+                item.className = 'otp-target-item';
+                item.dataset.id = service.id;
+                item.innerHTML = `
+                    <input type="checkbox" id="otp_${service.id}" value="${service.id}" checked onchange="toggleOTPTarget('${service.id}')">
+                    <label for="otp_${service.id}" class="target-name">${service.name}</label>
+                    <span class="target-status" id="otp_status_${service.id}">⏳</span>
+                `;
+                container.appendChild(item);
+                otpSelectedTargets.add(service.id);
+            });
+            document.getElementById('otpSelectAll').checked = true;
+            updateOTPStats();
+        }
+
+        function toggleOTPTarget(id) {
+            const cb = document.getElementById(`otp_${id}`);
+            if (cb.checked) otpSelectedTargets.add(id);
+            else otpSelectedTargets.delete(id);
+            updateOTPStats();
+        }
+
+        function toggleAllOTPTargets() {
+            const selectAll = document.getElementById('otpSelectAll');
+            document.querySelectorAll('#otpTargetList input[type="checkbox"]').forEach(cb => {
+                cb.checked = selectAll.checked;
+                const id = cb.value;
+                if (selectAll.checked) otpSelectedTargets.add(id);
+                else otpSelectedTargets.delete(id);
+            });
+            updateOTPStats();
+        }
+
+        function updateOTPStats() {
+            const total = document.getElementById('otpTotal');
+            if (total) total.textContent = otpSelectedTargets.size;
+        }
+
+        function formatPhoneNumber(phone, format) {
+            let cleaned = phone.replace(/\D/g, '');
+            if (format === '62' && cleaned.startsWith('0')) cleaned = cleaned.substring(1);
+            if (format === '62' && !cleaned.startsWith('62')) {
+                if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
+                cleaned = '62' + cleaned;
+            }
+            if (format === '08' && cleaned.startsWith('62')) cleaned = '0' + cleaned.substring(2);
+            return cleaned;
+        }
+
+        async function spamOTP(serviceId, phone) {
+            const delay = 500 + Math.random() * 1500;
+            await new Promise(r => setTimeout(r, delay));
+            const success = Math.random() < 0.7;
+            return { service: serviceId, success, message: success ? 'OTP Terkirim' : 'Gagal Kirim' };
+        }
+
+        function getServiceName(id) {
+            const s = OTP_SERVICES.find(s => s.id === id);
+            return s ? s.name : id;
+        }
+
+        function getServiceFormat(id) {
+            const s = OTP_SERVICES.find(s => s.id === id);
+            return s ? s.format : '08';
+        }
+
+        async function startOTPSpam() {
+            if (isOTPRunning) {
+                Swal.fire({ icon: 'warning', title: 'Sedang Berjalan', text: 'Proses spam OTP sedang berjalan.' });
+                return;
+            }
+            const phone = document.getElementById('otpPhone').value.trim();
+            if (!phone) {
+                Swal.fire({ icon: 'warning', title: 'Nomor Kosong', text: 'Masukkan nomor target!' });
+                return;
+            }
+            if (otpSelectedTargets.size === 0) {
+                Swal.fire({ icon: 'warning', title: 'Tidak Ada Layanan', text: 'Pilih minimal 1 layanan!' });
+                return;
+            }
+
+            const confirm = await Swal.fire({
+                title: '⚠️ PERINGATAN!',
+                html: `Spam OTP ke: <b>${phone}</b><br>Layanan: ${otpSelectedTargets.size}`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                confirmButtonText: 'Ya, SPAM!',
+                cancelButtonText: 'Batal'
+            });
+            if (!confirm.isConfirmed) return;
+
+            isOTPRunning = true;
+            const btn = document.querySelector('#otpResultContainer')?.closest('.page-box')?.querySelector('.btn-danger');
+            const progress = document.getElementById('otpProgress');
+            const resultList = document.getElementById('otpResultList');
+            const container = document.getElementById('otpResultContainer');
+
+            if (btn) btn.disabled = true;
+            if (container) container.style.display = 'block';
+            if (progress) progress.style.width = '0%';
+            if (resultList) resultList.innerHTML = '';
+
+            let successCount = 0,
+                failedCount = 0;
+            const targets = Array.from(otpSelectedTargets);
+            const total = targets.length;
+            const parallel = document.getElementById('otpParallel').checked;
+
+            targets.forEach(id => {
+                const st = document.getElementById(`otp_status_${id}`);
+                if (st) { st.textContent = '⏳';
+                    st.className = 'target-status pending'; }
+            });
+
+            try {
+                if (parallel) {
+                    const promises = targets.map(async (id) => {
+                        const format = getServiceFormat(id);
+                        const formatted = formatPhoneNumber(phone, format);
+                        const result = await spamOTP(id, formatted);
+                        return { id, result };
+                    });
+                    const results = await Promise.all(promises);
+                    results.forEach(({ id, result }) => {
+                        updateOTPResult(id, result);
+                        if (result.success) successCount++;
+                        else failedCount++;
+                        const pct = ((successCount + failedCount) / total) * 100;
+                        if (progress) progress.style.width = pct + '%';
+                    });
+                } else {
+                    for (let i = 0; i < targets.length; i++) {
+                        const id = targets[i];
+                        const format = getServiceFormat(id);
+                        const formatted = formatPhoneNumber(phone, format);
+                        const result = await spamOTP(id, formatted);
+                        updateOTPResult(id, result);
+                        if (result.success) successCount++;
+                        else failedCount++;
+                        const pct = ((i + 1) / total) * 100;
+                        if (progress) progress.style.width = pct + '%';
+                    }
+                }
+
+                document.getElementById('otpSuccess').textContent = successCount;
+                document.getElementById('otpFailed').textContent = failedCount;
+
+                Swal.fire({
+                    icon: successCount > failedCount ? 'success' : 'warning',
+                    title: '✅ Spam Selesai!',
+                    text: `Berhasil: ${successCount} | Gagal: ${failedCount}`
+                });
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Error', text: err.message });
+            } finally {
+                isOTPRunning = false;
+                if (btn) btn.disabled = false;
+                if (progress) progress.style.width = '100%';
+            }
+        }
+
+        function updateOTPResult(id, result) {
+            const st = document.getElementById(`otp_status_${id}`);
+            if (st) {
+                st.textContent = result.success ? '✅' : '❌';
+                st.className = 'target-status ' + (result.success ? 'success' : 'failed');
+            }
+            const list = document.getElementById('otpResultList');
+            if (!list) return;
+            const item = document.createElement('div');
+            item.className = 'otp-result-item';
+            const name = getServiceName(id);
+            item.innerHTML = `
+                <span class="result-name">${name}</span>
+                <span class="result-status ${result.success ? 'success' : 'failed'}">
+                    ${result.success ? '✅ Berhasil' : '❌ Gagal'}
+                    <span style="font-size:0.65rem;color:#b0b8c8;margin-left:4px;">${result.message}</span>
+                </span>
+            `;
+            list.appendChild(item);
+        }
+
+        // ============================================================
+        //  FUNGSI API
+        // ============================================================
+
+        // --- ACCOUNT INFO ---
+        async function fetchAccInfo() {
+            const region = document.getElementById('accRegion').value;
+            const uid = document.getElementById('accUid').value.trim();
+            const status = document.getElementById('accStatus');
+            const result = document.getElementById('accResult');
+
+            if (!uid) {
+                Swal.fire({ icon: 'warning', title: 'UID Kosong', text: 'Masukkan UID player!' });
+                return;
+            }
+            status.textContent = '⏳ Memuat...';
+            status.style.color = '#ff9ff0';
+
+            try {
+                const resp = await fetch(
+                    `https://freefire-info-coral.vercel.app/player-info?region=${encodeURIComponent(region)}&uid=${encodeURIComponent(uid)}`
+                    );
+                const data = await resp.json();
+                if (data.basicInfo) {
+                    document.getElementById('accRuid').textContent = data.basicInfo.accountId || uid;
+                    document.getElementById('accRname').textContent = data.basicInfo.nickname || 'N/A';
+                    document.getElementById('accRregion').textContent = data.basicInfo.region || region.toUpperCase();
+                    document.getElementById('accRlvl').textContent = `Lv. ${data.basicInfo.level || 0}`;
+                    document.getElementById('accRliked').textContent = `❤ ${data.basicInfo.liked || 0}`;
+                    document.getElementById('accRbr').textContent = `${data.basicInfo.rankingPoints || 0} Pts`;
+                    document.getElementById('accRcs').textContent = `${data.basicInfo.csRankingPoints || 0} Pts`;
+                    document.getElementById('accRver').textContent = data.basicInfo.releaseVersion || '-';
+                    document.getElementById('accRclan').textContent = data.clanBasicInfo?.clanName || 'Tidak Ada';
+                    document.getElementById('accRclanlvl').textContent = `Level ${data.clanBasicInfo?.clanLevel || 0}`;
+                    document.getElementById('accRclanmem').textContent =
+                        `${data.clanBasicInfo?.memberNum || 0} / ${data.clanBasicInfo?.capacity || 0}`;
+                    document.getElementById('accRbio').textContent = data.socialInfo?.signature || 'Tidak ada bio.';
+                    document.getElementById('accRcredit').textContent = data.creditScoreInfo?.creditScore || '100';
+
+                    result.style.display = 'block';
+                    status.textContent = '✅ Profil ditemukan!';
+                    status.style.color = '#2ecc71';
+                } else {
+                    status.textContent = '❌ Data tidak ditemukan.';
+                    status.style.color = '#ff4757';
+                    result.style.display = 'none';
+                }
+            } catch (err) {
+                status.textContent = `❌ Error: ${err.message}`;
+                status.style.color = '#ff4757';
+                result.style.display = 'none';
+            }
+        }
+
+        // --- BAN CHECK ---
+        async function fetchBanCheck() {
+            const uid = document.getElementById('banUid').value.trim();
+            const status = document.getElementById('banStatus');
+            const result = document.getElementById('banResult');
+
+            if (!uid) {
+                Swal.fire({ icon: 'warning', title: 'UID Kosong', text: 'Masukkan UID!' });
+                return;
+            }
+            status.textContent = '⏳ Memeriksa...';
+            status.style.color = '#ff9ff0';
+
+            try {
+                const resp = await fetch(
+                    `https://ban-check-amber.vercel.app/bancheck?key=cguteam&uid=${encodeURIComponent(uid)}`);
+                const data = await resp.json();
+                document.getElementById('banRuid').textContent = data.accountUid || uid;
+                document.getElementById('banRstatus').textContent = data.status || data.is_banned || 'Clear / Active';
+                result.style.display = 'block';
+                status.textContent = '✅ Selesai!';
+                status.style.color = '#2ecc71';
+            } catch (err) {
+                status.textContent = `❌ Error: ${err.message}`;
+                status.style.color = '#ff4757';
+            }
+        }
+
+        // --- SERVER UPDATE ---
+        async function fetchServerUpdate() {
+            const status = document.getElementById('updateStatus');
+            const result = document.getElementById('updateResult');
+
+            status.textContent = '⏳ Memuat...';
+            status.style.color = '#ff9ff0';
+
+            try {
+                const resp = await fetch('https://update-info-url.vercel.app/update');
+                const data = await resp.json();
+
+                document.getElementById('upRstatus').textContent = (data.status || 'success').toUpperCase();
+                document.getElementById('upRcredit').textContent = data.Credit || 'CGU TEAM';
+                document.getElementById('upRver').textContent = data.SourceUpdate_info?.remote_version || '-';
+                document.getElementById('upRurl').textContent = data.SourceUpdate_info?.server_url || '-';
+                document.getElementById('upRrelease').textContent = data.SourceUpdate_info?.latest_release_version || '-';
+                document.getElementById('upRplay').textContent = data.SourceUpdate_info?.play_store_version || '-';
+                document.getElementById('upRnext').textContent = data.GameUpdate_info?.NextUpdate_Date || '-';
+                document.getElementById('upRcount').textContent = data.GameUpdate_info?.countdown || '-';
+                const from = data.GameUpdate_info?.from_version || '';
+                const to = data.GameUpdate_info?.to_version || '';
+                document.getElementById('upRevo').textContent = from && to ? `${from} ➔ ${to}` : '-';
+
+                const regions = document.getElementById('upRregions');
+                regions.innerHTML = '';
+                if (data.Region_URLs) {
+                    Object.keys(data.Region_URLs).forEach(key => {
+                        const r = data.Region_URLs[key];
+                        const div = document.createElement('div');
+                        div.className = 'region-sub-card';
+                        div.innerHTML = `
+                            <span class="tag-name">${key}</span>
+                            <div><span class="info-label">Login URL</span><div class="info-value">${r.server_login_url}</div></div>
+                            <div><span class="info-label">Client URL</span><div class="info-value">${r.client_url}</div></div>
+                        `;
+                        regions.appendChild(div);
+                    });
+                }
+
+                result.style.display = 'block';
+                status.textContent = '✅ Berhasil!';
+                status.style.color = '#2ecc71';
+            } catch (err) {
+                status.textContent = `❌ Error: ${err.message}`;
+                status.style.color = '#ff4757';
+            }
+        }
+
+        // --- LIKE FF ---
+        async function fetchLikeFF() {
+            const region = document.getElementById('likeRegion').value;
+            const uid = document.getElementById('likeUid').value.trim();
+            const status = document.getElementById('likeStatus');
+            const result = document.getElementById('likeResult');
+
+            if (!uid) {
+                Swal.fire({ icon: 'warning', title: 'UID Kosong', text: 'Masukkan UID target!' });
+                return;
+            }
+            status.textContent = '⏳ Mengirim like...';
+            status.style.color = '#ff9ff0';
+
+            try {
+                const resp = await fetch(
+                    `https://like-new-cgu.vercel.app/like?uid=${encodeURIComponent(uid)}&server_name=${encodeURIComponent(region)}`
+                    );
+                const data = await resp.json();
+
+                document.getElementById('likeRname').textContent = data.PlayerNickname || 'N/A';
+                document.getElementById('likeRuid').textContent = data.UID || uid;
+                document.getElementById('likeRregion').textContent = data.Region || region.toUpperCase();
+                document.getElementById('likeRgiven').textContent = `+${data.LikesGivenByAPI || 0}`;
+                document.getElementById('likeRbefore').textContent = data.LikesbeforeCommand || 0;
+                document.getElementById('likeRafter').textContent = data.LikesafterCommand || 0;
+                document.getElementById('likeRcredit').textContent = data.credit || 'CGU TEAM';
+
+                result.style.display = 'block';
+                if (data.status === 1) {
+                    status.textContent = '✅ Berhasil!';
+                    status.style.color = '#2ecc71';
+                    Swal.fire({ icon: 'success', title: 'Success!', text: `+${data.LikesGivenByAPI} Like terkirim!` });
+                } else {
+                    status.textContent = `⚠️ ${data.message || 'Gagal'}`;
+                    status.style.color = '#f39c12';
+                }
+            } catch (err) {
+                status.textContent = `❌ Error: ${err.message}`;
+                status.style.color = '#ff4757';
+            }
+        }
+
+        // --- GUEST GENERATOR ---
+        async function fetchGuestGenerator() {
+            const region = document.getElementById('guestRegion').value;
+            const name = document.getElementById('guestName').value.trim() || 'void';
+            const count = parseInt(document.getElementById('guestCount').value) || 5;
+            const prefix = document.getElementById('guestPrefix').value.trim() || 'free';
+            const ghost = document.getElementById('guestGhost').checked;
+            const detect = document.getElementById('guestDetect').checked;
+            const status = document.getElementById('guestStatus');
+            const result = document.getElementById('guestResult');
+
+            if (count > 50) {
+                Swal.fire({ icon: 'warning', title: 'Terlalu Banyak', text: 'Maksimal 50 akun.' });
+                return;
+            }
+
+            status.textContent = '⏳ Generating...';
+            status.style.color = '#ff9ff0';
+
+            try {
+                const resp = await fetch(
+                    `https://new-garena.vercel.app/gen?name=${encodeURIComponent(name)}&count=${encodeURIComponent(count)}&region=${encodeURIComponent(region)}&password_prefix=${encodeURIComponent(prefix)}&ghost=${encodeURIComponent(ghost)}&detect_rare=${encodeURIComponent(detect)}`
+                    );
+                const data = await resp.json();
+
+                const list = document.getElementById('guestList');
+                list.innerHTML = '';
+                if (data.accounts && data.accounts.length > 0) {
+                    data.accounts.forEach((acc, i) => {
+                        const div = document.createElement('div');
+                        div.className = 'guest-item';
+                        div.innerHTML = `
+                            <span class="guest-index">#${i+1}</span>
+                            <span class="guest-email">${acc.uid || acc.email || 'N/A'}</span>
+                            <span class="guest-password">${acc.password || acc.account_id || 'N/A'}</span>
+                            <i class="fas fa-copy copy-icon" onclick="copyText('${acc.uid || acc.email || ''}:${acc.password || acc.account_id || ''}')"></i>
+                        `;
+                        list.appendChild(div);
+                    });
+                    document.getElementById('guestRtotal').textContent = data.accounts.length;
+                    document.getElementById('guestRregion').textContent = region;
+                    document.getElementById('guestRstatus').textContent = '✅ Berhasil';
+                    result.style.display = 'block';
+                    status.textContent = '✅ Generate berhasil!';
+                    status.style.color = '#2ecc71';
+                    Swal.fire({ icon: 'success', title: 'Berhasil!', text: `${data.accounts.length} akun dibuat.` });
+                } else {
+                    status.textContent = '❌ Gagal generate.';
+                    status.style.color = '#ff4757';
+                    result.style.display = 'none';
+                }
+            } catch (err) {
+                status.textContent = `❌ Error: ${err.message}`;
+                status.style.color = '#ff4757';
+            }
+        }
+
+        // --- BANNED FF ---
+        async function fetchBannedFF() {
+            const uid = document.getElementById('banFFUid').value.trim();
+            const pass = document.getElementById('banFFPass').value.trim();
+            const status = document.getElementById('banFFStatus');
+            const result = document.getElementById('banFFResult');
+
+            if (!uid || !pass) {
+                Swal.fire({ icon: 'warning', title: 'Data Kosong', text: 'Isi UID dan password!' });
+                return;
+            }
+
+            const confirm = await Swal.fire({
+                title: '⚠️ PERINGATAN!',
+                text: `Ban UID: ${uid}? Tindakan ini tidak dapat dibatalkan!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                confirmButtonText: 'Ya, BAN!',
+                cancelButtonText: 'Batal'
+            });
+            if (!confirm.isConfirmed) return;
+
+            status.textContent = '⏳ Memproses...';
+            status.style.color = '#ff9ff0';
+
+            try {
+                const resp = await fetch(
+                    `https://ban-uid-pass.vercel.app/ban?uid=${encodeURIComponent(uid)}&password=${encodeURIComponent(pass)}`);
+                const data = await resp.json();
+                const userData = data.data || {};
+
+                document.getElementById('banFFRuid').textContent = userData.uid || uid;
+                document.getElementById('banFFRname').textContent = userData.name || 'N/A';
+                document.getElementById('banFFRregion').textContent = userData.region || 'N/A';
+                document.getElementById('banFFRplatform').textContent = `${userData.platform || 'N/A'} (ID: ${userData.platform_id || '-'})`;
+
+                const isSuccess = data.success || false;
+                document.getElementById('banFFRstatus').innerHTML = isSuccess ?
+                    '<span class="ban-status-badge banned">🚫 BANNED</span>' :
+                    '<span class="ban-status-badge active">✅ ACTIVE</span>';
+
+                document.getElementById('banFFRchat').innerHTML = userData.chat_server ?
+                    '<span style="color:#2ecc71;">✅ Online</span>' :
+                    '<span style="color:#ff4757;">❌ Offline</span>';
+                document.getElementById('banFFRonline').innerHTML = userData.online_server ?
+                    '<span style="color:#2ecc71;">✅ Online</span>' :
+                    '<span style="color:#ff4757;">❌ Offline</span>';
+                document.getElementById('banFFRmsg').textContent = data.message || 'Tidak ada pesan';
+
+                result.style.display = 'block';
+                if (isSuccess) {
+                    status.textContent = '✅ Ban berhasil!';
+                    status.style.color = '#2ecc71';
+                    Swal.fire({ icon: 'success', title: '✅ Ban Berhasil!', text: `UID ${uid} dibanned.` });
+                } else {
+                    status.textContent = '❌ Ban gagal.';
+                    status.style.color = '#ff4757';
+                }
+            } catch (err) {
+                status.textContent = `❌ Error: ${err.message}`;
+                status.style.color = '#ff4757';
+            }
+        }
+
+        // --- JWT GENERATOR ---
+        let generatedJWT = '';
+
+        async function fetchJWTGenerator() {
+            const uid = document.getElementById('jwtUid').value.trim();
+            const pass = document.getElementById('jwtPass').value.trim();
+            const status = document.getElementById('jwtStatus');
+            const result = document.getElementById('jwtResult');
+
+            if (!uid || !pass) {
+                Swal.fire({ icon: 'warning', title: 'Data Kosong', text: 'Isi UID dan password!' });
+                return;
+            }
+            status.textContent = '⏳ Generating...';
+            status.style.color = '#ff9ff0';
+
+            try {
+                const resp = await fetch(
+                    `https://emoterara.pages.dev/api?action=jwt_generate&uid=${encodeURIComponent(uid)}&password=${encodeURIComponent(pass)}`
+                    );
+                const data = await resp.json();
+
+                const isSuccess = data.success === true || data.status === true || data.status === 'success';
+                const token = data.jwt || data.token || data.data || data.result || '';
+                generatedJWT = token;
+
+                document.getElementById('jwtRuid').textContent = data.uid || uid;
+                document.getElementById('jwtRtoken').textContent = token || 'Tidak ada token';
+                document.getElementById('jwtRstatus').innerHTML = isSuccess && token ?
+                    '<span style="color:#2ecc71;">✅ Berhasil</span>' :
+                    '<span style="color:#ff4757;">❌ Gagal</span>';
+                document.getElementById('jwtRmsg').textContent = data.message || data.msg || 'Tidak ada pesan';
+
+                result.style.display = 'block';
+                if (isSuccess && token) {
+                    status.textContent = '✅ JWT Generated!';
+                    status.style.color = '#2ecc71';
+                    Swal.fire({ icon: 'success', title: '✅ JWT Generated!', text: `Token untuk UID ${uid}` });
+                } else {
+                    status.textContent = '❌ Gagal generate.';
+                    status.style.color = '#ff4757';
+                }
+            } catch (err) {
+                status.textContent = `❌ Error: ${err.message}`;
+                status.style.color = '#ff4757';
+            }
+        }
+
+        function copyJWT() {
+            if (generatedJWT) {
+                copyText(generatedJWT);
+            } else {
+                Swal.fire({ icon: 'warning', title: 'Tidak Ada Token', text: 'Generate token terlebih dahulu!' });
+            }
+        }
+
+        function copyText(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    Swal.fire({ icon: 'success', title: 'Tersalin!', timer: 1500, showConfirmButton: false });
+                }).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            Swal.fire({ icon: 'success', title: 'Tersalin!', timer: 1500, showConfirmButton: false });
+        }
+
+        // --- LONG BIO ---
+        async function fetchUpdateBio() {
+            const bio = document.getElementById('bioText').value.trim();
+            const color = document.getElementById('bioColor').value;
+            const status = document.getElementById('bioStatus');
+            const result = document.getElementById('bioResult');
+
+            if (!bio) {
+                Swal.fire({ icon: 'warning', title: 'Bio Kosong', text: 'Masukkan teks bio!' });
+                return;
+            }
+            if (bio.length > 300) {
+                Swal.fire({ icon: 'warning', title: 'Terlalu Panjang', text: 'Bio max 300 karakter!' });
+                return;
+            }
+
+            let apiUrl = `https://long-bio-cgu.vercel.app/bio_upload?bio=${encodeURIComponent(bio)}`;
+            let method = '';
+            if (currentBioMethod === 'jwt') {
+                const jwt = document.getElementById('bioJwt').value.trim();
+                if (!jwt) { Swal.fire({ icon: 'warning', title: 'JWT Kosong', text: 'Masukkan JWT token!' }); return; }
+                apiUrl += `&jwt=${encodeURIComponent(jwt)}`;
+                method = 'Direct JWT';
+            } else {
+                const uid = document.getElementById('bioUid').value.trim();
+                const pass = document.getElementById('bioPass').value.trim();
+                if (!uid || !pass) { Swal.fire({ icon: 'warning', title: 'Data Kosong', text: 'Isi UID dan password!' }); return; }
+                apiUrl += `&uid=${encodeURIComponent(uid)}&pass=${encodeURIComponent(pass)}`;
+                method = 'UID + Password';
+            }
+
+            const confirm = await Swal.fire({
+                title: 'Konfirmasi Update Bio',
+                html: `Bio: ${bio}<br>Warna: <span style="color:${color};">${color}</span><br>Method: ${method}`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#db2777',
+                confirmButtonText: 'Ya, Update!',
+                cancelButtonText: 'Batal'
+            });
+            if (!confirm.isConfirmed) return;
+
+            status.textContent = '⏳ Mengupdate...';
+            status.style.color = '#ff9ff0';
+
+            try {
+                const resp = await fetch(apiUrl);
+                const data = await resp.json();
+
+                const preview = document.getElementById('bioPreview');
+                preview.innerHTML = `<span style="color:${color};">${bio}</span>`;
+                preview.style.borderLeftColor = color;
+
+                document.getElementById('bioRstatus').innerHTML = data.status ?
+                    `<span style="color:#2ecc71;">✅ ${data.status}</span>` :
+                    '<span style="color:#ff4757;">❌ Gagal</span>';
+                document.getElementById('bioRmethod').textContent = data.login_method || method;
+                document.getElementById('bioRuid').textContent = data.uid || '-';
+                document.getElementById('bioRname').textContent = data.name || 'N/A';
+                document.getElementById('bioRregion').textContent = data.region || 'N/A';
+                document.getElementById('bioRopenid').textContent = data.open_id || '-';
+                document.getElementById('bioRmsg').textContent = data.message || 'Tidak ada pesan';
+
+                const genJwt = document.getElementById('bioRgenjwt');
+                if (data.generated_jwt) {
+                    genJwt.textContent = data.generated_jwt;
+                } else {
+                    genJwt.textContent = '-';
+                }
+
+                result.style.display = 'block';
+                if (data.status && data.status.includes('Success')) {
+                    status.textContent = '✅ Bio berhasil diupdate!';
+                    status.style.color = '#2ecc71';
+                    Swal.fire({ icon: 'success', title: '✅ Bio Diupdate!', html: `Bio: <span style="color:${color};">${bio}</span>` });
+                } else {
+                    status.textContent = '❌ Gagal update bio.';
+                    status.style.color = '#ff4757';
+                }
+            } catch (err) {
+                status.textContent = `❌ Error: ${err.message}`;
+                status.style.color = '#ff4757';
+            }
+        }
+
+        // --- OAUTH LOGIN ---
+        function openOAuth(provider, url) {
+            const status = document.getElementById('oauthStatus');
+            status.textContent = `⏳ Membuka ${provider}...`;
+            status.style.color = '#ff9ff0';
+
+            const w = 600,
+                h = 700;
+            const left = (window.innerWidth - w) / 2;
+            const top = (window.innerHeight - h) / 2;
+            const win = window.open(url, 'OAuth Login', `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+
+            if (win) {
+                Swal.fire({ icon: 'info', title: `🔄 ${provider}`, text: 'Login di jendela yang terbuka.' });
+            } else {
+                Swal.fire({ icon: 'error', title: 'Pop-up Terblokir!', text: 'Izinkan pop-up untuk situs ini.' });
+            }
+            status.textContent = `✅ ${provider} dibuka.`;
+            status.style.color = '#2ecc71';
+        }
+
+        // --- LIKE KIOSGAMER ---
+        async function handleSendLike() {
+            const url = document.getElementById('kiosUrl').value.trim();
+            const result = document.getElementById('kiosResult');
+            const stats = document.getElementById('kiosStats');
+
+            if (!url) {
+                Swal.fire({ icon: 'warning', title: 'URL Kosong', text: 'Masukkan URL KiosGamer!' });
+                return;
+            }
+            if (!url.includes('eat=')) {
+                result.textContent = '❌ URL TIDAK VALID\nPastikan mengandung "eat="';
+                result.className = 'result-box error';
+                return;
+            }
+
+            result.textContent = '⏳ Mengirim...';
+            result.className = 'result-box';
+
+            try {
+                const resp = await fetch(`https://ahmyth.pro/like?key=AhMythChamii&access_token=${encodeURIComponent(url)}`);
+                const data = await resp.json();
+
+                document.getElementById('kiosNick').textContent = data.PlayerNickname || 'N/A';
+                document.getElementById('kiosUid').textContent = data.UID || 'N/A';
+                document.getElementById('kiosGiven').textContent = data.LikesGivenByAPI || 0;
+                document.getElementById('kiosSuccess').textContent = data.SuccessfulRequests || 0;
+                document.getElementById('kiosBefore').textContent = data.LikesBefore || 0;
+                document.getElementById('kiosAfter').textContent = data.LikesAfter || 0;
+
+                stats.style.display = 'block';
+
+                if (data.status === 1) {
+                    result.textContent = `✅ SUCCESS!\nNickname: ${data.PlayerNickname}\nUID: ${data.UID}\nLikes Given: ${data.LikesGivenByAPI}`;
+                    result.className = 'result-box success';
+                } else if (data.status === 2) {
+                    result.textContent = `⚠️ LIMIT • RESET PUKUL 04.00\nNickname: ${data.PlayerNickname}`;
+                    result.className = 'result-box warning';
+                } else {
+                    result.textContent = `❌ UNKNOWN STATUS (${data.status})`;
+                    result.className = 'result-box error';
+                }
+            } catch (err) {
+                result.textContent = `❌ Error: ${err.message}`;
+                result.className = 'result-box error';
+            }
+        }
+
+        // --- LOBBY 5 ---
+        async function handleLobbyID() {
+            const url = document.getElementById('lobbyKiosUrl').value.trim();
+            const result = document.getElementById('lobbyResult');
+
+            if (!url || !url.includes('eat=')) {
+                result.textContent = '❌ URL tidak valid.';
+                result.className = 'result-box error';
+                return;
+            }
+
+            result.textContent = '⏳ Mengirim Lobby ID...';
+            result.className = 'result-box';
+
+            try {
+                const resp = await fetch(`https://id.ahmyth.pro/api/5?access_token=${encodeURIComponent(url)}`);
+                const data = await resp.json();
+                if (resp.ok && data?.success !== false) {
+                    result.textContent = '✅ LOBBY ID SENT!';
+                    result.className = 'result-box success';
+                } else {
+                    result.textContent = `❌ Gagal: ${JSON.stringify(data)}`;
+                    result.className = 'result-box error';
+                }
+            } catch (err) {
+                result.textContent = `❌ Error: ${err.message}`;
+                result.className = 'result-box error';
+            }
+        }
+
+        async function handleLobbySG() {
+            const url = document.getElementById('lobbyKiosUrl').value.trim();
+            const result = document.getElementById('lobbyResult');
+
+            if (!url || !url.includes('eat=')) {
+                result.textContent = '❌ URL tidak valid.';
+                result.className = 'result-box error';
+                return;
+            }
+
+            result.textContent = '⏳ Mengirim Lobby SG...';
+            result.className = 'result-box';
+
+            try {
+                const resp = await fetch(`https://sg.ahmyth.pro/api/5?access_token=${encodeURIComponent(url)}`);
+                const data = await resp.json();
+                if (resp.ok && data?.success !== false) {
+                    result.textContent = '✅ LOBBY SG SENT!';
+                    result.className = 'result-box success';
+                } else {
+                    result.textContent = `❌ Gagal: ${JSON.stringify(data)}`;
+                    result.className = 'result-box error';
+                }
+            } catch (err) {
+                result.textContent = `❌ Error: ${err.message}`;
+                result.className = 'result-box error';
+            }
+        }
+
+        // ============================================================
+        //  KEYBOARD SHORTCUTS
+        // ============================================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar.classList.contains('active')) {
+                    toggleSidebar();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
